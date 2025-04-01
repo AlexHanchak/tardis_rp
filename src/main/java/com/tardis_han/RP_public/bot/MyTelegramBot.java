@@ -40,9 +40,9 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(this);
-            logger.info("✅ Бот успешно зарегистрирован!");
+            logger.info("✅ Bot successfully registered!");
         } catch (TelegramApiException e) {
-            logger.error("Ошибка при регистрации бота: {}", e.getMessage(), e);
+            logger.error("Error during bot registration: {}", e.getMessage(), e);
         }
     }
 
@@ -56,7 +56,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         if (update.hasMessage() && update.getMessage().hasText()) {
             messageHandler.processMessage(update);
         } else if (update.hasCallbackQuery()) {
-            logger.info("🔥 Получен callback-запрос!");
+            logger.info("🔥 Callback request received!");
             callbackHandler.processCallback(update);
         }
     }
@@ -65,7 +65,7 @@ public class MyTelegramBot extends TelegramLongPollingBot {
         try {
             execute(message);
         } catch (TelegramApiException e) {
-            logger.error("Ошибка при отправке сообщения: {}", e.getMessage());
+            logger.error("Message sending error: {}", e.getMessage());
         }
     }
 }

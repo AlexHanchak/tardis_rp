@@ -90,16 +90,16 @@ public class CallbackHandler {
         String callbackData = update.getCallbackQuery().getData();
         long chatId = update.getCallbackQuery().getMessage().getChatId();
     
-        logger.info("📌 Обрабатываем callback: '{}'", callbackData);
+        logger.info("📌 processCallback'{}'", callbackData);
     
         switch (callbackData) {
             case "about_me" -> sendMessageWithBack(chatId, 
-                "Я разработчик с 5-летним стажем, специализируюсь на Java, Python, JavaScript. В свободное время занимаюсь вебразработкой и кибербезопасностью.", 
+                "I am a developer with 5 years of experience, specializing in Java, Python, JavaScript. In my spare time I do web development and cybersecurity.", 
                 "main_menu");
             
             case "web_and_security" -> sendWebAndSecurityMenu(chatId);
-            case "web" -> sendSubMenu(chatId, "Выберите язык:", "java", "python", "javascript");
-            case "security" -> sendSubMenu(chatId, "Выберите тему:", "wifi", "wireshark", "aircrack-ng");
+            case "web" -> sendSubMenu(chatId, "Select a language:", "java", "python", "javascript");
+            case "security" -> sendSubMenu(chatId, "Choose a topic:", "wifi", "wireshark", "aircrack-ng");
             case "main_menu" -> sendStartMenu(chatId);
 
             // case "ask_question" -> {
@@ -141,16 +141,16 @@ public class CallbackHandler {
             //     ));
             // }
             
-            case "java" -> sendMessageWithBack(chatId, "Java — это мощный объектно-ориентированный язык программирования, широко используемый для веб-разработки и корпоративных систем.", "web");
-            case "python" -> sendMessageWithBack(chatId, "Python — это простой и мощный язык программирования, используемый для веб-разработки, науки о данных и автоматизации.", "web");
-            case "javascript" -> sendMessageWithBack(chatId, "JavaScript — это язык программирования для фронтенда и бэкенда, позволяющий создавать динамичные веб-приложения.", "web");
+            case "java" -> sendMessageWithBack(chatId, "Java is a powerful object-oriented programming language widely used for web development and enterprise systems.", "web");
+            case "python" -> sendMessageWithBack(chatId, "Python is a simple and powerful programming language used for web development, data science, and automation.", "web");
+            case "javascript" -> sendMessageWithBack(chatId, "JavaScript is a frontend and backend programming language that allows you to create dynamic web applications.", "web");
 
-            case "wifi" -> sendMessageWithBack(chatId, "Wi-Fi безопасность включает WEP, WPA и WPA2. Используйте сложные пароли и шифрование для защиты сети.", "security");
-            case "wireshark" -> sendMessageWithBack(chatId, "Wireshark — мощный анализатор сетевого трафика, используемый для диагностики и тестирования безопасности.", "security");
-            case "aircrack-ng" -> sendMessageWithBack(chatId, "Aircrack-ng — набор инструментов для тестирования безопасности Wi-Fi, включая мониторинг и взлом WEP/WPA.", "security");
+            case "wifi" -> sendMessageWithBack(chatId, "Wi-Fi security includes WEP, WPA, and WPA2. Use complex passwords and encryption to protect your network.", "security");
+            case "wireshark" -> sendMessageWithBack(chatId, "Wireshark is a powerful network traffic analyzer used for security diagnostics and testing.", "security");
+            case "aircrack-ng" -> sendMessageWithBack(chatId, "Aircrack-ng is a suite of tools for Wi-Fi security testing, including WEP/WPA monitoring and cracking.", "security");
 
         
-            default -> messageService.sendMessage(chatId, "Неизвестная команда.");
+            default -> messageService.sendMessage(chatId, "Unknown command.");
         }
     }
     
@@ -173,13 +173,13 @@ public class CallbackHandler {
     private void sendStartMenu(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));
-        message.setText("Добро пожаловать! Выберите опцию:");
+        message.setText("Welcome! Select an option:");
 
         message.setReplyMarkup(new InlineKeyboardMarkup(Arrays.asList(
-                Arrays.asList(menuService.createUrlButton("На сайт", "https://hanchakweb.web.app")),
-                Arrays.asList(menuService.createButton("Обо мне", "about_me")),
+                Arrays.asList(menuService.createUrlButton("To the website", "https://hanchakweb.web.app")),
+                Arrays.asList(menuService.createButton("About me", "about_me")),
                 // Arrays.asList(menuService.createButton("Задать вопрос", "ask_question")),
-                Arrays.asList(menuService.createButton("Вебразработка и кибербезопасность", "web_and_security"))
+                Arrays.asList(menuService.createButton("Web development and cybersecurity", "web_and_security"))
         )));
 
         myTelegramBot.sendMessage(message);
@@ -223,13 +223,13 @@ public class CallbackHandler {
     private void sendWebAndSecurityMenu(long chatId) {
         SendMessage message = new SendMessage();
     message.setChatId(String.valueOf(chatId));
-    message.setText("Выберите раздел:");
+    message.setText("Choose a section:");
 
     InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
     markup.setKeyboard(Arrays.asList(
-        Arrays.asList(menuService.createButton("Веб-разработка", "web")),
-        Arrays.asList(menuService.createButton("Кибербезопасность", "security")),
-        Arrays.asList(menuService.createButton("Back", "main_menu"))
+        Arrays.asList(menuService.createButton("Web development", "web")),
+        Arrays.asList(menuService.createButton("Cybersecurity", "security")),
+        Arrays.asList(menuService.createButton("🔙 Back", "main_menu"))
     ));
 
     message.setReplyMarkup(markup);
@@ -238,7 +238,7 @@ public class CallbackHandler {
 
     private void sendSubMenu(long chatId, String text, String... options) {
         if (myTelegramBot == null) {
-            logger.error("❌ Ошибка: myTelegramBot в CallbackHandler == null!");
+            logger.error("❌ Error: myTelegramBot in CallbackHandler == null!");
             return;
         }
 
@@ -254,7 +254,7 @@ public class CallbackHandler {
         }
 
     // Добавляем кнопку "Назад"
-        buttons.add(List.of(menuService.createButton("🔙 Назад", "web_and_security")));
+        buttons.add(List.of(menuService.createButton("🔙 Back", "web_and_security")));
 
         InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
         markup.setKeyboard(buttons);
@@ -265,7 +265,7 @@ public class CallbackHandler {
 
     private void sendMessageWithBack(long chatId, String text, String backCallback) {
         if (myTelegramBot == null) {
-            logger.error("❌ Ошибка: myTelegramBot в CallbackHandler == null!");
+            logger.error("❌ Error: myTelegramBot in CallbackHandler == null!");
             return;
         }
     
@@ -273,7 +273,7 @@ public class CallbackHandler {
         message.setChatId(String.valueOf(chatId));
         message.setText(text);
         message.setReplyMarkup(new InlineKeyboardMarkup(List.of(
-                List.of(menuService.createButton("🔙 Назад", backCallback)) // 🔥 тут исправлено
+                List.of(menuService.createButton("🔙 Back", backCallback)) // 🔥 тут исправлено
         ))); 
     
         myTelegramBot.sendMessage(message);

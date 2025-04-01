@@ -23,12 +23,12 @@ public class MenuService {
     public void sendStartMenu(long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(String.valueOf(chatId));
-        message.setText("Добро пожаловать! Выберите опцию:");
+        message.setText("Welcome! Choose an option:");
         message.setReplyMarkup(new InlineKeyboardMarkup(Arrays.asList(
-                Arrays.asList(createUrlButton("На сайт", "https://hanchakweb.web.app")),
-                Arrays.asList(createButton("Обо мне", "about_me")),
+                Arrays.asList(createUrlButton("To the website", "https://hanchakweb.web.app")),
+                Arrays.asList(createButton("About me", "about_me")),
                 // Arrays.asList(createButton("Задать вопрос", "ask_question")),
-                Arrays.asList(createButton("Вебразработка и кибербезопасность", "web_and_security"))
+                Arrays.asList(createButton("Web development and cybersecurity", "web_and_security"))
         )));
         myTelegramBot.sendMessage(message);
     }
