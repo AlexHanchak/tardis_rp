@@ -27,7 +27,7 @@ public class MenuService {
         message.setReplyMarkup(new InlineKeyboardMarkup(Arrays.asList(
                 Arrays.asList(createUrlButton("To the website", "https://hanchakweb.web.app")),
                 Arrays.asList(createButton("About me", "about_me")),
-                // Arrays.asList(createButton("Задать вопрос", "ask_question")),
+                Arrays.asList(createButton("Contact with me", "contact")),
                 Arrays.asList(createButton("Web development and cybersecurity", "web_and_security"))
         )));
         myTelegramBot.sendMessage(message);
